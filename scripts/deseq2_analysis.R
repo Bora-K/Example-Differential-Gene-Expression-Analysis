@@ -1,5 +1,5 @@
 # Load the necessary libraries
-library(tidyverse) 
+library(tidyverse)
 library(GEOquery)
 library(dplyr)
 library(DESeq2)
@@ -73,3 +73,7 @@ res <- results(dds, name = "condition_shFGFR1_vs_Control", alpha = 0.05)
 
 significant_genes <- subset(res, padj < 0.05 & abs(log2FoldChange) > 1)
 head(significant_genes[order(significant_genes$padj), ], 10)  # Top 10 genes
+
+# Save the results
+write.csv(res, "results/deseq2_results.csv", row.names = TRUE)
+write.csv(significant_genes, "results/significant_genes.csv", row.names = FALSE)
